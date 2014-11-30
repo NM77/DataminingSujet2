@@ -52,24 +52,13 @@ public class ParseHtml {
 					e.printStackTrace();
 				}
 
-
-
 				index++;
-
-
 			}
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-
-
-
-
 	}
-
-
 
 	private static String Parse(String texte){
 		texte = texte.replace("<br><br>"," ");
