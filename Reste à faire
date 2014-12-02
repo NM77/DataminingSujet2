@@ -1,7 +1,3 @@
 Ce fichier indique ce qu'il reste a faire pour la branche en question:
 
-- Lister les fichiers d'un dossier pour pouvoir les importer.
-- Créer le moins de fichier possible cad comme l'exemple du prof plusieurs chanson dans un seul fichier ce qui induit plusieurs contraintes:
-  *ecrire plusieurs chansons dans un fichier.
-  *Si le fichier est plein ou ne pourra pas acceuillir un n'ieme texte, créer un autre fichier.
   ...
