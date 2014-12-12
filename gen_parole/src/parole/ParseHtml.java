@@ -18,17 +18,38 @@ public class ParseHtml {
 
 	static Document doc;
 	static String texte;
-	static String PATH = "/home/kristof/siteweb/list_file";
+	static String PATH = "/home/5tid1a/cdossa08/siteweb/";
 	static String autor,title;
 	static String format;
 	static Elements element;
+	static String dict_anglais[],dict_francais[];
 
-//find $PDW -type f 
+	//find $PDW -type f 
 	public static void main(String[] args) {
-		File song = new File(PATH);
+		File song = new File(PATH+"fichier");
 		File chanson;
 		int index = 0;
 		Scanner sc;
+
+		dict_anglais = new String[6];
+		dict_francais = new String[6];
+
+		dict_anglais[0]=" the ";
+		dict_anglais[1]=" this ";
+		dict_anglais[2]=" is ";
+		dict_anglais[3]=" of ";
+		dict_anglais[4]=" then ";
+		dict_anglais[5]=" i ";
+
+		dict_francais[0]=" le ";
+		dict_francais[1]=" un ";
+		dict_francais[2]=" de ";
+		dict_francais[3]=" est ";
+		dict_francais[4]=" je ";
+		dict_francais[5]=" la ";
+
+
+
 		try {
 			sc = new Scanner(song);
 			List<String> lines = new ArrayList<String>();
@@ -39,13 +60,23 @@ public class ParseHtml {
 				try {
 					doc = Jsoup.parse(chanson, "UTF-8") ;
 					element= doc.getElementsByClass("ebzNative").remove() ;
-					element= doc.getElementsByClass("song-text");
+					element= doc.getElementsByClass("song-text");					
 					texte = element.html();
-					if(texte!="")
+					texte = texte.toLowerCase();
+
+
+					if ( is_french(texte))
 					{
-						texte = Parse(texte);					
-						Create_file(texte,String.valueOf(index));
-					}				
+						if(texte!="")
+						{
+							if(Parse(texte)!=null)
+							{
+								texte = Parse(texte);
+								Create_file(texte,String.valueOf(index));
+							}
+
+						}
+					}
 
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
@@ -78,18 +109,24 @@ public class ParseHtml {
 
 		format = autor+"¤"+title+"¤";
 
-		texte = texte.replace(System.getProperty("line.separator"),System.getProperty("line.separator")+format);
-		texte = format + texte;
+		if (format.contains("Traduction"))
+			return null;
+		else
+		{
+			texte = texte.replace(System.getProperty("line.separator"),System.getProperty("line.separator")+format);
+			texte = format + texte;
 
 
-		//		System.out.println(texte);
-		return texte;
+			//		System.out.println(texte);
+			return texte;
+		}
+
 	}
 
 	private static void Create_file(String texte,String name){
 		FileWriter file;
 		try {
-			file = new FileWriter("/home/kristof/siteweb/"+"0", true);
+			file = new FileWriter(PATH+"test", true);
 			BufferedWriter bw = new BufferedWriter ( file ) ;  
 			PrintWriter pw = new PrintWriter ( bw ) ;
 			pw. print (texte) ; 
@@ -100,5 +137,29 @@ public class ParseHtml {
 		}		    
 
 	}
+
+	private static boolean is_french(String texte)
+	{
+		int mot_anglais = 0  ,mot_francais = 0;
+
+
+		for(int i=0;i<dict_anglais.length;i++)
+		{
+
+			if(texte.contains( dict_francais[i] ))
+				mot_francais++;
+
+			if( texte.contains( dict_anglais[i] ))
+				mot_anglais++;
+		}
+
+		System.out.println("nombre de mot francais :"+ mot_francais );
+		System.out.println("nombre de mot anglais :"+ mot_anglais );
+		if(mot_anglais>mot_francais)
+			return false;
+		else
+			return true;
+	}
+
 
 }
