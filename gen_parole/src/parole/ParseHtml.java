@@ -22,7 +22,6 @@ public class ParseHtml {
 	static String autor,title;
 	static String format;
 	static Elements element;
-	static String dict_anglais[],dict_francais[];
 
 	//find $PDW -type f 
 	public static void main(String[] args) {
@@ -30,25 +29,6 @@ public class ParseHtml {
 		File chanson;
 		int index = 0;
 		Scanner sc;
-
-		dict_anglais = new String[6];
-		dict_francais = new String[6];
-
-		dict_anglais[0]=" the ";
-		dict_anglais[1]=" this ";
-		dict_anglais[2]=" is ";
-		dict_anglais[3]=" of ";
-		dict_anglais[4]=" then ";
-		dict_anglais[5]=" i ";
-
-		dict_francais[0]=" le ";
-		dict_francais[1]=" un ";
-		dict_francais[2]=" de ";
-		dict_francais[3]=" est ";
-		dict_francais[4]=" je ";
-		dict_francais[5]=" la ";
-
-
 
 		try {
 			sc = new Scanner(song);
@@ -143,7 +123,7 @@ public class ParseHtml {
 		int mot_anglais = 0  ,mot_francais = 0;
 
 
-		for(int i=0;i<dict_anglais.length;i++)
+		/*for(int i=0;i<dict_anglais.length;i++)
 		{
 
 			if(texte.contains( dict_francais[i] ))
@@ -151,7 +131,7 @@ public class ParseHtml {
 
 			if( texte.contains( dict_anglais[i] ))
 				mot_anglais++;
-		}
+		}*/
 
 		System.out.println("nombre de mot francais :"+ mot_francais );
 		System.out.println("nombre de mot anglais :"+ mot_anglais );
