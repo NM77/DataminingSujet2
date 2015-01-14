@@ -19,17 +19,24 @@ public class ParseHtml {
 	static Document doc;
 	static String texte;
 	static String PATH = "/home/5tid1a/cdossa08/siteweb/";
+	static String LANG = "/home/5tid1a/cdossa08/git/DataminingSujet2/gen_parole/Langues/";
 	static String autor,title;
 	static String format;
 	static Elements element;
 	static Dictionnaire dict_anglais;
 	static Dictionnaire dict_francais;
-	static Dictionnaire dict_esp;
+	static Dictionnaire dict_spanish;
+	static Dictionnaire dict_german;
+
 	//find $PDW -type f 
+
 	public static void main(String[] args) {
-		
-		dict_francais = new Dictionnaire("/home/5tid1a/cdossa08/siteweb/french");
-		dict_anglais = new Dictionnaire("/home/5tid1a/cdossa08/siteweb/english");
+
+		dict_francais = new Dictionnaire(LANG+"french");		
+		dict_anglais = new Dictionnaire(LANG+"english");
+		dict_spanish = new Dictionnaire(LANG+"spanish");
+		dict_german = new Dictionnaire(LANG+"german");
+
 		File song = new File(PATH+"liste_chanson");
 		File chanson;
 		int index = 0;
@@ -40,26 +47,28 @@ public class ParseHtml {
 			List<String> lines = new ArrayList<String>();
 			while (sc.hasNextLine()) {
 				lines.add(sc.nextLine());
-				System.out.println(lines.get(index));
+				//System.out.println(lines.get(index));
 				chanson = new File(lines.get(index));
 				try {
 					doc = Jsoup.parse(chanson, "UTF-8") ;
-					element= doc.getElementsByClass("ebzNative").remove() ;
-					element= doc.getElementsByClass("song-text");					
-					texte = element.html();
-					texte = texte.toLowerCase();
-
-
-					if ( is_french(texte))
+					if(doc!=null)
 					{
-						if(texte!="")
-						{
-							if(Parse(texte)!=null)
-							{
-								texte = Parse(texte);
-								Create_file(texte,String.valueOf(index));
-							}
+						element = doc.getElementsByClass("ebzNative").remove() ;
+						element = doc.getElementsByClass("song-text");					
+						texte = element.html();
+						texte = texte.toLowerCase();
 
+						if ( is_french(texte))
+						{
+							if(texte!="")
+							{
+								if(Parse(texte)!=null)
+								{
+									texte = Parse(texte);
+									Create_file(texte);
+								}
+
+							}
 						}
 					}
 					else
@@ -78,6 +87,7 @@ public class ParseHtml {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		System.out.println(index);
 	}
 
 	private static String Parse(String texte){
@@ -110,7 +120,7 @@ public class ParseHtml {
 
 	}
 
-	private static void Create_file(String texte,String name){
+	private static void Create_file(String texte){
 		FileWriter file;
 		try {
 			file = new FileWriter(PATH+"filtrat", true);
@@ -127,7 +137,7 @@ public class ParseHtml {
 
 	private static boolean is_french(String texte)
 	{
-		int mot_anglais = 0  ,mot_francais = 0;//, mot_esp = 0;
+		int mot_anglais = 0  ,mot_francais = 0, mot_esp = 0,mot_german=0;
 
 
 		for(int i=0;i<dict_anglais.mot.size();i++)
@@ -136,23 +146,32 @@ public class ParseHtml {
 				mot_anglais++;
 		}
 
-		for(int i=0;i<dict_anglais.mot.size();i++)
-		{
+		for(int i=0;i<dict_german.mot.size();i++)
+		{		
+			if( texte.contains( dict_german.mot.get(i) ))
+				mot_german++;
+		}
 
+		for(int i=0;i<dict_francais.mot.size();i++)
+		{
 			if(texte.contains( dict_francais.mot.get(i) ))
 				mot_francais++;
 		}
 
-		/*for(int i=0;i<dict_esp.mot.size();i++)
+		for(int i=0;i<dict_spanish.mot.size();i++)
 		{
+			if(texte.contains( dict_spanish.mot.get(i) ))
+				mot_esp++;
+		}
 
-			if(texte.contains( dict_esp.mot.get(i) ))
-				mot_francais++;
-		}*/
-		
+		/*		
 		System.out.println("nombre de mot francais :"+ mot_francais );
 		System.out.println("nombre de mot anglais :"+ mot_anglais );
-		if(mot_anglais>mot_francais)
+		System.out.println("nombre de mot spanish :"+ mot_esp );
+		System.out.println("nombre de mot allemand :"+ mot_german );		 
+		 */
+
+		if(mot_anglais>mot_francais || mot_german>mot_francais || mot_esp>mot_francais || mot_francais==0)
 			return false;
 		else
 			return true;

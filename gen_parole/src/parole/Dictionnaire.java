@@ -17,14 +17,14 @@ public class Dictionnaire {
 		int index =0;
 
 		try {
-			fichier = new Scanner(new FileReader(path));
 			
+			fichier = new Scanner(new FileReader(path));			
 			fichier.useDelimiter(System.getProperty("line.separator"));
 
 			while ( fichier.hasNext() ) 
 			{
 			    mot.add( fichier.next());
-			    System.out.println(mot.get(index));
+			    //System.out.println(mot.get(index));
 			    index++;			    
 			}
 			
