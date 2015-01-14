@@ -24,11 +24,12 @@ public class ParseHtml {
 	static Elements element;
 	static Dictionnaire dict_anglais;
 	static Dictionnaire dict_francais;
+	static Dictionnaire dict_esp;
 	//find $PDW -type f 
 	public static void main(String[] args) {
 		
-		dict_francais = new Dictionnaire("/home/5tid1a/cdossa08/dictionnaire");
-		dict_anglais = new Dictionnaire("/home/5tid1a/cdossa08/dictionnaire2");
+		dict_francais = new Dictionnaire("/home/5tid1a/cdossa08/siteweb/french");
+		dict_anglais = new Dictionnaire("/home/5tid1a/cdossa08/siteweb/english");
 		File song = new File(PATH+"liste_chanson");
 		File chanson;
 		int index = 0;
@@ -126,7 +127,7 @@ public class ParseHtml {
 
 	private static boolean is_french(String texte)
 	{
-		int mot_anglais = 0  ,mot_francais = 0;
+		int mot_anglais = 0  ,mot_francais = 0;//, mot_esp = 0;
 
 
 		for(int i=0;i<dict_anglais.mot.size();i++)
@@ -142,6 +143,12 @@ public class ParseHtml {
 				mot_francais++;
 		}
 
+		/*for(int i=0;i<dict_esp.mot.size();i++)
+		{
+
+			if(texte.contains( dict_esp.mot.get(i) ))
+				mot_francais++;
+		}*/
 		
 		System.out.println("nombre de mot francais :"+ mot_francais );
 		System.out.println("nombre de mot anglais :"+ mot_anglais );
