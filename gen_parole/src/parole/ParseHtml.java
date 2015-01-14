@@ -22,10 +22,14 @@ public class ParseHtml {
 	static String autor,title;
 	static String format;
 	static Elements element;
-
+	static Dictionnaire dict_anglais;
+	static Dictionnaire dict_francais;
 	//find $PDW -type f 
 	public static void main(String[] args) {
-		File song = new File(PATH+"fichier");
+		
+		dict_francais = new Dictionnaire("/home/5tid1a/cdossa08/dictionnaire");
+		dict_anglais = new Dictionnaire("/home/5tid1a/cdossa08/dictionnaire2");
+		File song = new File(PATH+"liste_chanson");
 		File chanson;
 		int index = 0;
 		Scanner sc;
@@ -56,6 +60,10 @@ public class ParseHtml {
 							}
 
 						}
+					}
+					else
+					{
+						;
 					}
 
 				} catch (IOException e) {
@@ -95,8 +103,6 @@ public class ParseHtml {
 		{
 			texte = texte.replace(System.getProperty("line.separator"),System.getProperty("line.separator")+format);
 			texte = format + texte;
-
-
 			//		System.out.println(texte);
 			return texte;
 		}
@@ -106,7 +112,7 @@ public class ParseHtml {
 	private static void Create_file(String texte,String name){
 		FileWriter file;
 		try {
-			file = new FileWriter(PATH+"test", true);
+			file = new FileWriter(PATH+"filtrat", true);
 			BufferedWriter bw = new BufferedWriter ( file ) ;  
 			PrintWriter pw = new PrintWriter ( bw ) ;
 			pw. print (texte) ; 
@@ -123,16 +129,20 @@ public class ParseHtml {
 		int mot_anglais = 0  ,mot_francais = 0;
 
 
-		/*for(int i=0;i<dict_anglais.length;i++)
+		for(int i=0;i<dict_anglais.mot.size();i++)
+		{		
+			if( texte.contains( dict_anglais.mot.get(i) ))
+				mot_anglais++;
+		}
+
+		for(int i=0;i<dict_anglais.mot.size();i++)
 		{
 
-			if(texte.contains( dict_francais[i] ))
+			if(texte.contains( dict_francais.mot.get(i) ))
 				mot_francais++;
+		}
 
-			if( texte.contains( dict_anglais[i] ))
-				mot_anglais++;
-		}*/
-
+		
 		System.out.println("nombre de mot francais :"+ mot_francais );
 		System.out.println("nombre de mot anglais :"+ mot_anglais );
 		if(mot_anglais>mot_francais)
