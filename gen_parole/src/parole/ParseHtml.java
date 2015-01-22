@@ -27,7 +27,7 @@ public class ParseHtml {
 	static Dictionnaire dict_francais;
 	static Dictionnaire dict_spanish;
 	static Dictionnaire dict_german;
-
+	static Dictionnaire dict_coreen;
 	//find $PDW -type f 
 
 	public static void main(String[] args) {
@@ -36,6 +36,7 @@ public class ParseHtml {
 		dict_anglais = new Dictionnaire(LANG+"english");
 		dict_spanish = new Dictionnaire(LANG+"spanish");
 		dict_german = new Dictionnaire(LANG+"german");
+		dict_coreen = new Dictionnaire(LANG+"coreen");
 
 		File song = new File(PATH+"liste_chanson");
 		File chanson;
@@ -137,7 +138,7 @@ public class ParseHtml {
 
 	private static boolean is_french(String texte)
 	{
-		int mot_anglais = 0  ,mot_francais = 0, mot_esp = 0,mot_german=0;
+		int mot_anglais = 0  ,mot_francais = 0, mot_esp = 0,mot_german=0, mot_coreen=0;
 
 
 		for(int i=0;i<dict_anglais.mot.size();i++)
@@ -163,6 +164,12 @@ public class ParseHtml {
 			if(texte.contains( dict_spanish.mot.get(i) ))
 				mot_esp++;
 		}
+		
+		for(int i=0;i<dict_coreen.mot.size();i++)
+		{
+			if(texte.contains( dict_coreen.mot.get(i) ))
+				mot_coreen++;
+		}
 
 		/*		
 		System.out.println("nombre de mot francais :"+ mot_francais );
@@ -171,7 +178,7 @@ public class ParseHtml {
 		System.out.println("nombre de mot allemand :"+ mot_german );		 
 		 */
 
-		if(mot_anglais>mot_francais || mot_german>mot_francais || mot_esp>mot_francais || mot_francais==0)
+		if(mot_anglais>mot_francais || mot_german>mot_francais || mot_esp>mot_francais || mot_francais==0 || mot_coreen>mot_francais)
 			return false;
 		else
 			return true;
