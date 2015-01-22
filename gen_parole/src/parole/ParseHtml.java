@@ -48,7 +48,7 @@ public class ParseHtml {
 			List<String> lines = new ArrayList<String>();
 			while (sc.hasNextLine()) {
 				lines.add(sc.nextLine());
-				//System.out.println(lines.get(index));
+				System.out.println(lines.get(index));
 				chanson = new File(lines.get(index));
 				try {
 					doc = Jsoup.parse(chanson, "UTF-8") ;
@@ -101,14 +101,17 @@ public class ParseHtml {
 		//texte = texte.replace(System.getProperty("line.separator")+System.getProperty("line.separator")+" ",System.getProperty("line.separator"));
 
 		texte = texte.replace(System.getProperty("line.separator")+System.getProperty("line.separator"),System.getProperty("line.separator"));
-
+		
 		element = doc.select("span[property=v:artist]");
 		autor = element.text();
 		element = doc.select("span[property=v:name]");
 		title = element.text();
 
 		format = autor+"¤"+title+"¤";
-
+		
+		if(texte.contains("\"") )
+			texte.replace("\"","");
+		//tuyfuy
 		if (format.contains("Traduction"))
 			return null;
 		else
@@ -127,6 +130,7 @@ public class ParseHtml {
 			file = new FileWriter(PATH+"filtrat", true);
 			BufferedWriter bw = new BufferedWriter ( file ) ;  
 			PrintWriter pw = new PrintWriter ( bw ) ;
+			pw.print(System.getProperty("line.separator"));
 			pw. print (texte) ; 
 			pw. close ( ) ; 
 		} catch (IOException e) {
