@@ -109,8 +109,8 @@ public class ParseHtml {
 
 		format = autor+"¤"+title+"¤";
 		
-		if(texte.contains("\"") )
-			texte.replace("\"","");
+		if(texte.contains("\\") )
+			texte=texte.replace("\\","");
 		//tuyfuy
 		if (format.contains("Traduction"))
 			return null;
