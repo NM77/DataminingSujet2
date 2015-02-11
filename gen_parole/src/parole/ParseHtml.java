@@ -64,9 +64,9 @@ public class ParseHtml {
 						{
 							if(texte!="")
 							{
-								if(Parse(texte)!=null)
+								if( (texte = Parse(texte)) != null )
 								{
-									texte = Parse(texte);
+									//texte = Parse(texte);
 									Create_file(texte);
 									nb_chanson++;
 								}
@@ -95,6 +95,7 @@ public class ParseHtml {
 	}
 
 	private static String Parse(String texte){
+		//texte = texte.replace(oldChar, newChar)
 		texte = texte.replace("<br><br>"," ");
 		texte = texte.replace("<br>"," ");			
 		texte = texte.replace("  ","");
@@ -104,23 +105,32 @@ public class ParseHtml {
 		//texte = texte.replace(System.getProperty("line.separator")+System.getProperty("line.separator")+" ",System.getProperty("line.separator"));
 
 		texte = texte.replace(System.getProperty("line.separator")+System.getProperty("line.separator"),System.getProperty("line.separator"));
-		
+		texte = texte.replace(" ",System.getProperty("line.separator"));
 		element = doc.select("span[property=v:artist]");
 		autor = element.text();
 		element = doc.select("span[property=v:name]");
 		title = element.text();
 
 		format = autor+"¤"+title+"¤";
+		texte = texte.replace(".", "");
+		texte = texte.replace(",", "");
+		texte = texte.replace("?", "");
+		texte = texte.replace("!", "");
+		texte = texte.replace(";", "");
+		texte = texte.replace(" ", "");
 		
 		if(texte.contains("\\") )
 			texte=texte.replace("\\","");
 
 		if (format.contains("raduction"))
-			return null;
+			{
+				return null;
+			}
 		else
 		{
 			texte = texte.replace(System.getProperty("line.separator"),System.getProperty("line.separator")+format);
 			texte = format + texte;
+			
 			return texte;
 		}
 		
