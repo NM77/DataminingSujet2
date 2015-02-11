@@ -38,9 +38,9 @@ public class ParseHtml {
 		dict_german = new Dictionnaire(LANG+"german");
 		dict_coreen = new Dictionnaire(LANG+"coreen");
 
-		File song = new File(PATH+"liste_chanson");
+		File song = new File(PATH+"liste_chansons");
 		File chanson;
-		int index = 0;
+		int index = 0,nb_chanson=0;
 		Scanner sc;
 
 		try {
@@ -55,6 +55,7 @@ public class ParseHtml {
 					if(doc!=null)
 					{
 						element = doc.getElementsByClass("ebzNative").remove() ;
+						element = doc.getElementsByTag("script").remove();
 						element = doc.getElementsByClass("song-text");					
 						texte = element.html();
 						texte = texte.toLowerCase();
@@ -67,6 +68,7 @@ public class ParseHtml {
 								{
 									texte = Parse(texte);
 									Create_file(texte);
+									nb_chanson++;
 								}
 
 							}
@@ -88,7 +90,8 @@ public class ParseHtml {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(index);
+		System.out.println(index+" chansons traitées");
+		System.out.println(nb_chanson+" chansons francaises");
 	}
 
 	private static String Parse(String texte){
@@ -111,23 +114,23 @@ public class ParseHtml {
 		
 		if(texte.contains("\\") )
 			texte=texte.replace("\\","");
-		//tuyfuy
-		if (format.contains("Traduction"))
+
+		if (format.contains("raduction"))
 			return null;
 		else
 		{
 			texte = texte.replace(System.getProperty("line.separator"),System.getProperty("line.separator")+format);
 			texte = format + texte;
-			//		System.out.println(texte);
 			return texte;
 		}
+		
 
 	}
 
 	private static void Create_file(String texte){
 		FileWriter file;
 		try {
-			file = new FileWriter(PATH+"filtrat", true);
+			file = new FileWriter(PATH+"filtrat2", true);
 			BufferedWriter bw = new BufferedWriter ( file ) ;  
 			PrintWriter pw = new PrintWriter ( bw ) ;
 			pw.print(System.getProperty("line.separator"));
