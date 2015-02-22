@@ -20,7 +20,9 @@ public class ParseHtml {
 	static String texte;
 	static String PATH = "/home/5tid1a/cdossa08/siteweb/";
 	static String LANG = "/home/5tid1a/cdossa08/git/DataminingSujet2/gen_parole/Langues/";
+	static String GENR = "/home/5tid1a/cdossa08/git/DataminingSujet2/gen_parole/Genre/";
 	static String autor,title;
+	static String genre;
 	static String format;
 	static Elements element;
 	static Dictionnaire dict_anglais;
@@ -28,6 +30,14 @@ public class ParseHtml {
 	static Dictionnaire dict_spanish;
 	static Dictionnaire dict_german;
 	static Dictionnaire dict_coreen;
+	static Genre_musique genr_jazz;
+	static Genre_musique genr_pop;
+	static Genre_musique genr_rap;
+	static Genre_musique genr_rnb;
+	static Genre_musique genr_rock;
+	static Genre_musique genr_variete;
+	
+	
 	//find $PDW -type f 
 
 	public static void main(String[] args) {
@@ -37,6 +47,13 @@ public class ParseHtml {
 		dict_spanish = new Dictionnaire(LANG+"spanish");
 		dict_german = new Dictionnaire(LANG+"german");
 		dict_coreen = new Dictionnaire(LANG+"coreen");
+		
+		genr_jazz = new Genre_musique(GENR+"jazz");
+		genr_pop = new Genre_musique(GENR+"pop");
+		genr_rap = new Genre_musique(GENR+"rap");
+		genr_rnb = new Genre_musique(GENR+"rnb");
+		genr_rock = new Genre_musique(GENR+"rock");
+		genr_variete = new Genre_musique(GENR+"variete");
 
 		File song = new File(PATH+"liste_chansons");
 		File chanson;
@@ -199,6 +216,59 @@ public class ParseHtml {
 			return false;
 		else
 			return true;
+	}
+	private static String detect_music_genre(String autor)
+	{
+
+		while (genre.length() == 0)
+		{
+
+			for(int i=0;i<genr_jazz.artist.size();i++)
+			{		
+				if( texte.contains( genr_jazz.artist.get(i) ))
+					genre="jazz";
+				break;
+			}
+
+			for(int i=0;i<genr_pop.artist.size();i++)
+			{		
+			if( texte.contains( genr_pop.artist.get(i) ))
+					genre="pop";
+				break;
+			}
+
+			for(int i=0;i<genr_rap.artist.size();i++)
+			{		
+				if( texte.contains( genr_rap.artist.get(i) ))
+					genre="rap";
+				break;
+			}
+
+			for(int i=0;i<genr_rnb.artist.size();i++)
+			{		
+				if( texte.contains( genr_rnb.artist.get(i) ))
+					genre="rnb";
+				break;
+			}
+
+			for(int i=0;i<genr_rock.artist.size();i++)
+			{		
+				if( texte.contains( genr_rock.artist.get(i) ))
+					genre="rock";
+				break;
+			}
+
+			for(int i=0;i<genr_variete.artist.size();i++)
+			{		
+				if( texte.contains( genr_variete.artist.get(i) ))
+					genre="variete";
+				break;
+			}
+			
+		}
+		
+		return genre;
+
 	}
 
 
