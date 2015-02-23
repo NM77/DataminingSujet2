@@ -253,7 +253,7 @@ public class ParseHtml {
 
 			for(int i=0;i<genr_rock.artist.size();i++)
 			{		
-				if( texte.contains( genr_rock.artist.get(i) ))
+				if( autor.contains( genr_rock.artist.get(i) ))
 					genre="rock";
 				break;
 			}
