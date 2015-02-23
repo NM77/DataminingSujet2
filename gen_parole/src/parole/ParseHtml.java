@@ -225,28 +225,28 @@ public class ParseHtml {
 
 			for(int i=0;i<genr_jazz.artist.size();i++)
 			{		
-				if( texte.contains( genr_jazz.artist.get(i) ))
+				if( autor.contains( genr_jazz.artist.get(i) ))
 					genre="jazz";
 				break;
 			}
 
 			for(int i=0;i<genr_pop.artist.size();i++)
 			{		
-			if( texte.contains( genr_pop.artist.get(i) ))
+				if( autor.contains( genr_pop.artist.get(i) ))
 					genre="pop";
 				break;
 			}
 
 			for(int i=0;i<genr_rap.artist.size();i++)
 			{		
-				if( texte.contains( genr_rap.artist.get(i) ))
+				if( autor.contains( genr_rap.artist.get(i) ))
 					genre="rap";
 				break;
 			}
 
 			for(int i=0;i<genr_rnb.artist.size();i++)
 			{		
-				if( texte.contains( genr_rnb.artist.get(i) ))
+				if( autor.contains( genr_rnb.artist.get(i) ))
 					genre="rnb";
 				break;
 			}
@@ -260,7 +260,7 @@ public class ParseHtml {
 
 			for(int i=0;i<genr_variete.artist.size();i++)
 			{		
-				if( texte.contains( genr_variete.artist.get(i) ))
+				if( autor.contains( genr_variete.artist.get(i) ))
 					genre="variete";
 				break;
 			}
